@@ -1,0 +1,163 @@
+{
+	"id": "3fedbc73-5ff3-4973-de8e-4b2301385204",
+	"name": "Retail Online checkout Counter",
+	"description": "",
+	"order": [
+		"8f810453-6fcf-ccdc-8577-de4b6c5929cc",
+		"0ee490c3-7818-c56c-1706-b95467c37939",
+		"d92ba511-6eb3-794f-f3fd-8d8cfaf8db44",
+		"52c4af18-fe6b-c362-aa0b-16875c8cd0fc"
+	],
+	"folders": [],
+	"folders_order": [],
+	"timestamp": 1548568787550,
+	"owner": 0,
+	"public": false,
+	"requests": [
+		{
+			"id": "0ee490c3-7818-c56c-1706-b95467c37939",
+			"headers": "Content-Type: application/json\nAuthorization: Basic cmV0YWlsOnJldGFpbA==\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Authorization",
+					"value": "Basic cmV0YWlsOnJldGFpbA==",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/retail/products/v1",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1548615441305,
+			"name": "Create different product",
+			"description": "",
+			"collectionId": "3fedbc73-5ff3-4973-de8e-4b2301385204",
+			"responses": [],
+			"rawModeData": "{\n\t\"barCodeId\":\"3\",\n\t\"name\":\"prod3\",\n\t\"category\":\"c\",\n\t\"cost\":\"323\"\n}"
+		},
+		{
+			"id": "52c4af18-fe6b-c362-aa0b-16875c8cd0fc",
+			"headers": "Authorization: Basic cmV0YWlsOnJldGFpbA==\n//Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "Basic cmV0YWlsOnJldGFpbA==",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": false
+				}
+			],
+			"url": "http://localhost:8080/retail/bills/v1/62",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1548615449092,
+			"name": "Get bill details for purchased items",
+			"description": "",
+			"collectionId": "3fedbc73-5ff3-4973-de8e-4b2301385204",
+			"responses": []
+		},
+		{
+			"id": "8f810453-6fcf-ccdc-8577-de4b6c5929cc",
+			"headers": "Content-Type: application/json\nAuthorization: Basic cmV0YWlsOnJldGFpbA==\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "",
+					"value": "",
+					"description": "",
+					"enabled": false
+				},
+				{
+					"key": "Authorization",
+					"value": "Basic cmV0YWlsOnJldGFpbA==",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/retail/categories/v1",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1548615444829,
+			"name": "Create Product's category",
+			"description": "",
+			"collectionId": "3fedbc73-5ff3-4973-de8e-4b2301385204",
+			"responses": [],
+			"rawModeData": "{\n\t\"name\":\"c\"\n}"
+		},
+		{
+			"id": "d92ba511-6eb3-794f-f3fd-8d8cfaf8db44",
+			"headers": "Content-Type: application/json\nAuthorization: Basic cmV0YWlsOnJldGFpbA==\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Authorization",
+					"value": "Basic cmV0YWlsOnJldGFpbA==",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/retail/bills/v1",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1548615436398,
+			"name": "Creates bill for purchased items",
+			"description": "",
+			"collectionId": "3fedbc73-5ff3-4973-de8e-4b2301385204",
+			"responses": [],
+			"rawModeData": "{\r\n\t\"purchaseItems\": [\r\n\t\t{\r\n\t\t\t\"barCodeId\": \"1\",\r\n\t\t\t\"quantity\": 2.3\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"barCodeId\": \"2\",\r\n\t\t\t\"quantity\": 4.3\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"barCodeId\": \"3\",\r\n\t\t\t\"quantity\": 5.5\r\n\t\t}\r\n\t]\r\n\r\n}"
+		}
+	]
+}
