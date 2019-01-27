@@ -1,6 +1,7 @@
 package com.retail.endpoint;
 
 import com.retail.service.BillingManagementService;
+import com.retail.wrapper.BillingRequest;
 import com.retail.wrapper.BillingResponse;
 import com.retail.wrapper.PurchaseItemRequest;
 import org.slf4j.Logger;
@@ -30,12 +31,12 @@ public class BillingManagementEndPoint {
     /**
      * Creates Bill for the items purchased
      * @Request List{{@link PurchaseItemRequest}
-     * @param purchaseItemRequestList
+     * @param {@link BillingRequest}
      * @return HTTP 201
      */
     @PostMapping(value = "/v1")
-    public ResponseEntity createCategory(@Valid @RequestBody List<PurchaseItemRequest> purchaseItemRequestList) {
-        BillingResponse billingResponse = billingManagementService.createBill(purchaseItemRequestList);
+    public ResponseEntity createBill(@Valid @RequestBody BillingRequest billingRequest) {
+        BillingResponse billingResponse = billingManagementService.createBill(billingRequest);
         return new ResponseEntity<BillingResponse>(billingResponse, HttpStatus.CREATED);
 
     }
@@ -47,7 +48,7 @@ public class BillingManagementEndPoint {
      */
     @GetMapping("v1/{id}")
     public @ResponseBody
-    ResponseEntity getBillingDetails(@Valid @PathVariable int id) {
+    ResponseEntity getBillingDetails(@Valid @PathVariable Long id) {
         BillingResponse billingResponseDetails = billingManagementService.getBillingDetails(id);
         return new ResponseEntity<BillingResponse>(billingResponseDetails, HttpStatus.OK);
 

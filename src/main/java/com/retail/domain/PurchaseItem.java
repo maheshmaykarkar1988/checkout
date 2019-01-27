@@ -17,8 +17,8 @@ public class PurchaseItem implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    @Column(name = "id")
-    private int id;
+    @Column(name = "id", updatable = false, nullable = false)
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "product_id")

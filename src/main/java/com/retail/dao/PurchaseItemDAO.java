@@ -12,8 +12,8 @@ import java.util.List;
  * Created by Mahesh Maykarkar on 26/01/19.
  */
 
-public interface PurchaseItemDAO extends JpaRepository<PurchaseItem, Integer> {
+public interface PurchaseItemDAO extends JpaRepository<PurchaseItem, Long> {
 
     @Query("select pi from PurchaseItem pi where pi.bill.id = :id")
-    public List<PurchaseItem> findByBillingId(@Param("id") int id);
+    public List<PurchaseItem> findByBillingId(@Param("id") Long id);
 }

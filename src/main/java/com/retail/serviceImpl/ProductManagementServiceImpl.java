@@ -26,12 +26,16 @@ public class ProductManagementServiceImpl implements ProductManagementService {
     @Autowired
     CategoryDAO categoryDAO;
 
+    /**
+     * Creates Product in the system
+     * @param productRequest
+     */
     @Override
     public void createProduct(ProductRequest productRequest) {
 
         verifyIfProductExists(productRequest.getBarCodeId());
 
-        Category category = categoryDAO.findCategoryByName(productRequest.getCategory());
+        Category category = categoryDAO.findCategoryByName(productRequest.getCategory().toUpperCase());
 
         if (Objects.isNull(category)) {
             throw new RetailValidationException("Invalid Category type");
@@ -42,10 +46,14 @@ public class ProductManagementServiceImpl implements ProductManagementService {
         productDAO.save(product);
     }
 
+    /**
+     * Verifies whether Product exists or not based on bar code
+     * @param barCodeId
+     */
     private void verifyIfProductExists(String barCodeId) {
         Product product = productDAO.findByBarCodeId(barCodeId);
         if (!Objects.isNull(product)) {
-            throw new RetailValidationException("Product with BarCode ID  " + barCodeId + " already exists");
+            throw new RetailValidationException(String.format("Product with BarCode %s already exists in system",product.getBarCodeId()));
         }
     }
 }

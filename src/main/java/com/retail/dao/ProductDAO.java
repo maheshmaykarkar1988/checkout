@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
  * Created by Mahesh Maykarkar on 26/01/19.
  */
 
-public interface ProductDAO extends JpaRepository<Product, Integer> {
+public interface ProductDAO extends JpaRepository<Product, Long> {
     @Query("select p from Product p where p.barCodeId = :barCodeId")
     public Product findByBarCodeId(@Param("barCodeId") String barCodeId);
 

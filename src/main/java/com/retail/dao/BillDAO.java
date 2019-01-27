@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * Created by Mahesh Maykarkar on 26/01/19.
  */
 
-public interface BillDAO extends JpaRepository<Bill, Integer> {
+public interface BillDAO extends JpaRepository<Bill, Long> {
 }

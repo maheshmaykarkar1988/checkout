@@ -1,5 +1,6 @@
 package com.retail.service;
 
+import com.retail.wrapper.BillingRequest;
 import com.retail.wrapper.BillingResponse;
 import com.retail.wrapper.PurchaseItemRequest;
 
@@ -12,7 +13,7 @@ import java.util.List;
 
 public interface BillingManagementService {
 
-    public BillingResponse createBill(List<PurchaseItemRequest> purchaseItemRequestList);
+    public BillingResponse createBill(BillingRequest billingRequest);
 
-    public BillingResponse getBillingDetails(int billingId);
+    public BillingResponse getBillingDetails(Long billingId);
 }

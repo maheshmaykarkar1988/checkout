@@ -18,8 +18,8 @@ public class Bill {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    @Column(name = "id")
-    private int id;
+    @Column(name = "id", updatable = false, nullable = false)
+    private Long id;
 
     @Column(name = "total_cost")
     private double totalCost;

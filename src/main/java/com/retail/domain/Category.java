@@ -18,8 +18,8 @@ public class Category implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    @Column(name = "id")
-    private int id;
+    @Column(name = "id", updatable = false, nullable = false)
+    private Long id;
 
     @Column(name = "name")
     @NotBlank

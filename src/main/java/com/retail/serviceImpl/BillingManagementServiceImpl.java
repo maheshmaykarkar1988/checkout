@@ -6,8 +6,10 @@ import com.retail.dao.PurchaseItemDAO;
 import com.retail.domain.Bill;
 import com.retail.domain.Product;
 import com.retail.domain.PurchaseItem;
+import com.retail.exception.NoRecordFoundException;
 import com.retail.exception.RetailValidationException;
 import com.retail.service.BillingManagementService;
+import com.retail.wrapper.BillingRequest;
 import com.retail.wrapper.BillingResponse;
 import com.retail.wrapper.PurchaseItemRequest;
 import com.retail.wrapper.PurchaseItemResponse;
@@ -35,14 +37,21 @@ public class BillingManagementServiceImpl implements BillingManagementService {
     @Autowired
     PurchaseItemDAO purchaseItemDAO;
 
+    /**
+     * Creates total bill for all purchased items
+     * @param billingRequest
+     * @return
+     */
     @Transactional
     @Override
-    public BillingResponse createBill(List<PurchaseItemRequest> purchaseItemRequestList) {
+    public BillingResponse createBill(BillingRequest billingRequest) {
 
         Set<PurchaseItem> purchases = new HashSet<>();
 
-        for (PurchaseItemRequest purchaseItemRequest : purchaseItemRequestList) {
+        for (PurchaseItemRequest purchaseItemRequest : billingRequest.getPurchaseItems()) {
             Product product = productDAO.findByBarCodeId(purchaseItemRequest.getBarCodeId());
+            if (Objects.isNull(product))
+                throw new NoRecordFoundException(String.format("Product with Barcode %s doesn't exists in system", purchaseItemRequest.getBarCodeId()));
             PurchaseItem purchaseItem = new PurchaseItem(product, purchaseItemRequest.getQuantity());
             purchases.add(purchaseItem);
         }
@@ -55,9 +64,14 @@ public class BillingManagementServiceImpl implements BillingManagementService {
         return new BillingResponse(saveBill);
     }
 
+    /**
+     * Returns billing details for given billing id
+     * @param billingId
+     * @return {@link BillingResponse}
+     */
     @Transactional
     @Override
-    public BillingResponse getBillingDetails(int billingId) {
+    public BillingResponse getBillingDetails(Long billingId) {
         List<PurchaseItem> purchaseItems = purchaseItemDAO.findByBillingId(billingId);
 
         if (CollectionUtils.isEmpty(purchaseItems)) {
@@ -67,21 +81,11 @@ public class BillingManagementServiceImpl implements BillingManagementService {
         BillingResponse billingResponse = new BillingResponse();
         List<PurchaseItemResponse> purchaseItemList = new ArrayList<>();
         for (PurchaseItem purchaseItem : purchaseItems) {
-            billingResponse.setBillingId(purchaseItem.getBill().getId());
-            billingResponse.setTotalCost(purchaseItem.getBill().getTotalCost());
-            billingResponse.setTotalSalesTax(purchaseItem.getBill().getTotalSalesTax());
-            billingResponse.setTotalBillAmount(Math.round((purchaseItem.getBill().getTotalCost() + purchaseItem.getBill().getTotalSalesTax()) * 100.0)/100.0);
-
-            PurchaseItemResponse purchaseItemResponse = new PurchaseItemResponse();
-            purchaseItemResponse.setProductName(purchaseItem.getProduct().getName());
-            purchaseItemResponse.setSalesTaxPerItem(Math.round((purchaseItem.getPurchaseSalesTax() / purchaseItem.getQuantity())*100.0)/100.0);
-            purchaseItemResponse.setPurchasedCost(purchaseItem.getPurchaseCost());
-            purchaseItemResponse.setCostPerItem(Math.round((purchaseItem.getPurchaseCost() / purchaseItem.getQuantity())*100.0)/100.0);
-            purchaseItemResponse.setPurchasedSalesTax(purchaseItem.getPurchaseSalesTax());
-            purchaseItemResponse.setQuantity(purchaseItem.getQuantity());
+            billingResponse.setResponseDetails(billingResponse, purchaseItem);
+            PurchaseItemResponse purchaseItemResponse = new PurchaseItemResponse(purchaseItem);
             purchaseItemList.add(purchaseItemResponse);
-
         }
+
         billingResponse.setPurchaseItems(purchaseItemList);
         return billingResponse;
     }

@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 /**
  * Endpoints related to product Category CRUD operations
  * Created by Mahesh Maykarkar on 26/01/19.
@@ -29,7 +31,7 @@ public class CategoryManagementEndPoint {
      * @return HTTP 201
      */
     @PostMapping(value = "/v1")
-    public ResponseEntity createCategory(@RequestBody CategoryRequest categoryRequest) {
+    public ResponseEntity createCategory(@Valid @RequestBody CategoryRequest categoryRequest) {
         categoryManagementService.createCategory(categoryRequest);
         return new ResponseEntity<Void>(HttpStatus.CREATED);
 

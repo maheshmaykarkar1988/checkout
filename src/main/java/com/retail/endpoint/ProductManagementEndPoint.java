@@ -1,7 +1,6 @@
 package com.retail.endpoint;
 
 import com.retail.service.ProductManagementService;
-import com.retail.wrapper.CategoryRequest;
 import com.retail.wrapper.ProductRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

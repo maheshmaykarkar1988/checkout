@@ -3,6 +3,7 @@ package com.retail.wrapper;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
+import javax.validation.constraints.Size;
 import java.util.List;
 
 /**
@@ -14,5 +15,6 @@ import java.util.List;
 @Data
 public class BillingRequest {
 
+    @Size(min = 1, message = "Item list must not be blank")
     private List<PurchaseItemRequest> purchaseItems;
 }

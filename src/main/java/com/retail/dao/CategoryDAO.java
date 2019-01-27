@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
  * Created by Mahesh Maykarkar on 26/01/19.
  */
 
-public interface CategoryDAO extends JpaRepository<Category, Integer> {
+public interface CategoryDAO extends JpaRepository<Category, Long> {
     @Query("SELECT c FROM Category c WHERE c.name = :name")
     Category findCategoryByName(@Param("name") String name);
 

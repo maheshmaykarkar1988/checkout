@@ -30,26 +30,34 @@ public class CategoryManagementServiceImpl implements CategoryManagementService 
     @Value("${category.value.B}")
     private int categoryBValue;
 
+    /**
+     * Created Category A, B and C in the system
+     * @param categoryRequest
+     */
     @Override
     @Transactional
     public void createCategory(CategoryRequest categoryRequest) {
 
         verifyIfCategory(categoryRequest.getName());
 
-        Category category = new Category(categoryRequest.getName());
+        Category category = new Category(categoryRequest.getName().toUpperCase());
 
-        if (categoryRequest.getName().equalsIgnoreCase("A")) {
+        if (categoryRequest.getName().equalsIgnoreCase(CategoryType.A.name())) {
             category.setSalesTax(categoryAValue);
         } else {
-            if (categoryRequest.getName().equalsIgnoreCase("B"))
+            if (categoryRequest.getName().equalsIgnoreCase(CategoryType.B.name()))
                 category.setSalesTax(categoryBValue);
         }
 
         categoryDAO.save(category);
     }
 
+    /**
+     * Verifies whether Category exists or not
+     * @param name
+     */
     private void verifyIfCategory(String name) {
-        if (name.equalsIgnoreCase("A") || name.equalsIgnoreCase("B") || name.equalsIgnoreCase("C")) {
+        if (name.equalsIgnoreCase(CategoryType.A.name()) || name.equalsIgnoreCase(CategoryType.B.name()) || name.equalsIgnoreCase(CategoryType.C.name())) {
             Category category = categoryDAO.findCategoryByName(name);
             if (!Objects.isNull(category)) {
                 throw new RetailValidationException("Category " + name + " already exists");
